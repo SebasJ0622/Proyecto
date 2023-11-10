@@ -14,18 +14,43 @@ public class App {
 
             switch (opcion) {
                 case 1:
-                    g_Us.ini_ses();
+                    g_Us.login();
                     break;
                 case 2: 
-                    g_Us.reg_usr();
+                    reg_us();
                 break;
                 case 3: 
-                teclas.close();
+                System.out.println("Hasta luego");
                 System.exit(0);
                 default: 
                 System.out.println("Opcion no valida." + "\nPor favor escoge una opcion valida");
             }
+        }        
+    }
+
+    private static void reg_us (){
+        Scanner teclaso = new Scanner(System.in); 
+
+        System.out.println("Ingrese nombre de usuario: ");
+        String new_user = teclaso.nextLine(); 
+
+        System.out.println("Ingrese Correo: ");
+        String new_mail= teclaso.nextLine(); 
+
+        System.out.println("Ingrese nueva contraseña: ");
+        String new_passw = teclaso.nextLine(); 
+
+        String[] newUserArray = new String[]{new_user, new_mail, Datos_us.encriptar(new_passw)};
+        int posicion = 0; 
+        while (posicion < Datos_us.g_users().length && Datos_us.g_users()[posicion] != null) {
+            posicion++;            
         }
-        
+
+        if (posicion < Datos_us.g_users().length) {
+            Datos_us.g_users()[posicion] = newUserArray;
+            System.out.println("Usuario registrado exitosamente. ");            
+        } else {
+            System.out.println("El sistema ha alcanzado el limite de usuarios. ");
+        }
     }
 }

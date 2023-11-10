@@ -1,53 +1,69 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
+import java.util.Arrays;
+
+
 
 public class Datos_us {
-    private String nom_user;
-    private String passw_Hash; 
-    private String sal; 
+    
+    private static String [][] users = new String[10][3]; 
+    private static int int_fail = 0; 
+    public static final int max_fail = 3; 
 
-    public Datos_us (String nom_user, String passw){
-        this.nom_user = nom_user;
-        this.sal = generateSalRandom(); 
-        this.passw_Hash = generateHash(passw,sal); 
+    static {
+        users[0] = new String[]{"Andres", "andres123@gmail.com",encriptar("Andres123")};
+        users[1] = new String[]{"David", "david1@gmail.com", encriptar("David123")};
+        users[2] = new String[]{"Luis", "luis1@gmail.com", encriptar("Luis123")}; 
+        users[3] = new String[]{"Andrea", "andrea1@gmail.com", encriptar("Andrea123")};
+        users[4] = new String[]{"Luisa", "luisa1@gmail.com", encriptar("Luisa123")};
     }
 
-    public String g_nomUs(){
-        return nom_user; 
+    public static String[][] g_users(){
+        return users; 
     }
 
-    public String g_passwHash(){
-        return passw_Hash; 
+    public static void s_user (String[][] new_users){
+        users = new_users; 
     }
 
-    public String g_sal(){
-        return sal; 
+    public static void inc_intFail (){
+        int_fail++; 
     }
 
-    private String generateSalRandom(){
-        SecureRandom random = new SecureRandom(); 
-        byte[] sal = new byte[16]; 
-        random.nextBytes(sal);
-        return Base64.getEncoder().encodeToString(sal); 
-
+    public static int g_intFail (){
+        return int_fail; 
     }
 
-    private String generateHash (String passw, String sal) {
+    public static void res_intFail(){
+        int_fail = 0; 
+    }
+
+    public static void block_user (){
+        System.out.println("Usuario bloqueado por demasiados intentos fallidos");
+    }
+
+    public static String encriptar(String passw){
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte [] bytes = md.digest((passw + sal).getBytes()); 
-            return Base64.getEncoder().encodeToString(bytes); 
+            byte[] hashBytes = md.digest(passw.getBytes()); 
+            StringBuilder stringBuilder = new StringBuilder();
+            for (byte b : hashBytes){
+                stringBuilder.append(String.format("%02x", b));
+            }
+            return stringBuilder.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            return null; 
         }
-        return null; 
     }
 
-    public boolean verf_passw (String passw){
-        String ing_passHash = generateHash(passw, sal); 
-        return ing_passHash.equals(this.passw_Hash);
+    public static boolean verf_passw (String in_user, String in_passw){
+        for (String [] user : g_users()) {
+            if (user!= null && (user[0].equals(in_user)|| user[1].equals(in_user))) {
+                return encriptar(in_passw).equals(user[2]);
+            }
+        }
+        return false; 
     }
 }
 
