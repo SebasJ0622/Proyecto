@@ -38,19 +38,11 @@ public class App {
         String new_mail= teclaso.nextLine(); 
 
         System.out.println("Ingrese nueva contraseña: ");
-        String new_passw = teclaso.nextLine(); 
+        String new_passw = teclaso.nextLine();    
 
-        String[] newUserArray = new String[]{new_user, new_mail, Datos_us.encriptar(new_passw)};
-        int posicion = 0; 
-        while (posicion < Datos_us.g_users().length && Datos_us.g_users()[posicion] != null) {
-            posicion++;            
-        }
-
-        if (posicion < Datos_us.g_users().length) {
-            Datos_us.g_users()[posicion] = newUserArray;
-            System.out.println("Usuario registrado exitosamente. ");            
-        } else {
-            System.out.println("El sistema ha alcanzado el limite de usuarios. ");
-        }
+        boolean user_agg = Datos_us.add_nUser(new_user, new_mail, new_passw);
+       if (!user_agg) {
+        System.out.println("No se pudo agregar el usuario.");
+       }
     }
 }

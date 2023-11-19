@@ -19,6 +19,7 @@ public class Gest_us {
         System.out.println("Acceso Concedido.  ¡Bienvenido, " + in_user + "!");
         Datos_us.res_intFail();        
     } else {
+        Datos_us.inc_intFail();
         System.out.println("Acceso Denegado. Usuario o contraseña incorrectos. ");
         System.out.println("Intentos fallidos: " + Datos_us.g_intFail());
         if (Datos_us.g_intFail() >= Datos_us.max_fail) {

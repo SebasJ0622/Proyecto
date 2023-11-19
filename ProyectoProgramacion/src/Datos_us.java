@@ -1,6 +1,6 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+
 
 
 
@@ -66,5 +66,22 @@ public class Datos_us {
         }
         return false; 
     }
+
+    public static boolean add_nUser(String new_user, String new_mail, String new_passw){
+        for (int i = 0; i < users.length; i++) {
+            if (users[i][0] == null) {
+                users[i][0] = new_user;
+                users[i][1] = new_mail;
+                users[i][2] = encriptar(new_passw);
+                System.out.println("Usuario registrado exitosamente. ");
+                return true; 
+            }
+        }
+        System.out.println("El sistema ha alcanzado el limite de usuarios.");
+        return false;
+    }
 }
+
+        
+       
 
