@@ -16,6 +16,7 @@ public class Datos_us {
         users[2] = new String[]{"Luis", "luis1@gmail.com", encriptar("Luis123")}; 
         users[3] = new String[]{"Andrea", "andrea1@gmail.com", encriptar("Andrea123")};
         users[4] = new String[]{"Luisa", "luisa1@gmail.com", encriptar("Luisa123")};
+        users[5] = new String[]{"Daniel", "dani.123@gmail.com", encriptar("Dani123")};
     }
 
     public static String[][] g_users(){
